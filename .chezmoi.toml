@@ -1,0 +1,13 @@
+[data]
+os = "macos"
+
+[git]
+autoCommit = true
+autoPush = true
+
+[template]
+options = ["missing"]
+
+[ignore]
+  files = [".chezmoiscripts"]
+

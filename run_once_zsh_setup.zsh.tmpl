@@ -1,47 +1,54 @@
 #!/usr/bin/env zsh
 
-# Helper for colored output
-log() {
-  local color="$1"
-  local message="$2"
-  case "$color" in
-    green) color_code="\033[0;32m" ;;
-    blue)  color_code="\033[0;34m" ;;
-    red)   color_code="\033[0;31m" ;;
-    *)     color_code="" ;;
-  esac
-  echo -e "${color_code}${message}\033[0m"
-}
+
+# ─────────────────────────────────────────────
+# Zsh setup
+# ─────────────────────────────────────────────
+
+# Adding the log method
+LOG_PATH="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}/scripts/log.sh"
+source "$LOG_PATH"
 
 ZSHRC="$HOME/.zshrc"
 ALIAS_FILE="$HOME/.zsh_aliases"
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-# 1. Ensure Oh My Zsh is installed
+# ─────────────────────────────────────────────
+#  Ensure Oh My Zsh is installed
+# ─────────────────────────────────────────────
+
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  log blue "➡️ Installing Oh My Zsh..."
+  log info "➡️ Installing Oh My Zsh..."
   export RUNZSH=no
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-  log green "✅ Oh My Zsh already installed"
+  log success "✅ Oh My Zsh already installed"
 fi
 
-# 2. Ensure plugins installed (zsh-autosuggestions, syntax-highlighting)
+
+# ──────────────────────────────────────────────────────────────────────────────────────────
+#  Ensure plugins installed (zsh-autosuggestions, syntax-highlighting)
+# ──────────────────────────────────────────────────────────────────────────────────────────
+
 if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-autosuggestions" ]; then
-  log blue "➡️ Installing zsh-autosuggestions..."
+  log info "➡️ Installing zsh-autosuggestions..."
   git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM}/plugins/zsh-autosuggestions"
 else
-  log green "✅ zsh-autosuggestions already installed"
+  log success "✅ zsh-autosuggestions already installed"
 fi
 
 if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting" ]; then
-  log blue "➡️ Installing zsh-syntax-highlighting..."
+  log info "➡️ Installing zsh-syntax-highlighting..."
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting"
 else
-  log green "✅ zsh-syntax-highlighting already installed"
+  log success "✅ zsh-syntax-highlighting already installed"
 fi
 
-# 3. Create or update ~/.zsh_aliases with all your aliases
+
+# ───────────────────────────────────────────────────────
+#  Create or update ~/.zsh_aliases with all your aliases
+# ───────────────────────────────────────────────────────
+
 cat > "$ALIAS_FILE" <<'EOF'
 # Custom aliases managed by setup script
 
@@ -59,28 +66,39 @@ if command -v eza &>/dev/null; then
 fi
 EOF
 
-log green "✅ Aliases written to $ALIAS_FILE"
+log success "✅ Aliases written to $ALIAS_FILE"
 
-# 4. Ensure .zshrc sources ~/.zsh_aliases if not already done
+# ─────────────────────────────────────────────────────────
+#  Ensure .zshrc sources ~/.zsh_aliases if not already done
+# ─────────────────────────────────────────────────────────
+
 if ! grep -q "source $ALIAS_FILE" "$ZSHRC"; then
-  log blue "➡️ Adding source line for $ALIAS_FILE in $ZSHRC"
+  log info "➡️ Adding source line for $ALIAS_FILE in $ZSHRC"
   echo "" >> "$ZSHRC"
   echo "# Source custom aliases" >> "$ZSHRC"
   echo "source $ALIAS_FILE" >> "$ZSHRC"
 else
-  log green "✅ $ZSHRC already sources $ALIAS_FILE"
+  log success "✅ $ZSHRC already sources $ALIAS_FILE"
 fi
 
-# 5. Ensure plugins line in .zshrc includes needed plugins (git, zsh-autosuggestions, zsh-syntax-highlighting)
+
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────
+#  Ensure plugins line in .zshrc includes needed plugins (git, zsh-autosuggestions, zsh-syntax-highlighting)
+# ──────────────────────────────────────────────────────────────────────────────────────────────────────────
+
 if grep -q "^plugins=" "$ZSHRC"; then
   sed -i '' 's/^plugins=.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' "$ZSHRC"
-  log green "✅ Plugins list updated in $ZSHRC"
+  log success "✅ Plugins list updated in $ZSHRC"
 else
   echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> "$ZSHRC"
-  log green "✅ Plugins list added to $ZSHRC"
+  log success "✅ Plugins list added to $ZSHRC"
 fi
 
-echo "🔧 Configuring JAVA_HOME for openjdk@21..."
+# ─────────────────────────────────────────────
+#  Configuring JAVA_HOME for openjdk@21..."
+# ─────────────────────────────────────────────
+
+log info "🔧 Configuring JAVA_HOME for openjdk@21..."
 
 BREW_PREFIX="$(brew --prefix)"
 JDK_PATH="${BREW_PREFIX}/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
@@ -88,7 +106,7 @@ JDK_PATH="${BREW_PREFIX}/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
 if [ -d "$JDK_PATH" ]; then
   # Check if JAVA_HOME is already in ~/.zshrc
   if ! grep -q "export JAVA_HOME=" "$HOME/.zshrc"; then
-    echo "📦 Adding JAVA_HOME and PATH for openjdk@21 to ~/.zshrc"
+    log info "📦 Adding JAVA_HOME and PATH for openjdk@21 to ~/.zshrc"
     {
       echo ''
       echo '# Set JAVA_HOME for openjdk@21'
@@ -96,18 +114,20 @@ if [ -d "$JDK_PATH" ]; then
       echo 'export PATH="$JAVA_HOME/bin:$PATH"'
     } >> "$HOME/.zshrc"
   else
-    echo "✅ JAVA_HOME already configured in ~/.zshrc"
+    log info "✅ JAVA_HOME already configured in ~/.zshrc"
   fi
 else
-  echo "❌ openjdk@21 not found. Please run 'brew install openjdk@21' first."
+  log error "❌ openjdk@21 not found. Please run 'brew install openjdk@21' first."
   exit 1
 fi
-echo "✅ JAVA_HOME configured successfully."
+log success "✅ JAVA_HOME configured successfully."
 
+# ───────────────────────────────────────────────────────────────
+#  Reload .zshrc to apply changes immediately in current session
+# ───────────────────────────────────────────────────────────────
 
-# 6. Reload .zshrc to apply changes immediately in current session
-log blue "🔄 Reloading $ZSHRC"
+log info "🔄 Reloading $ZSHRC"
 source "$ZSHRC"
 
-log green "✅ Zsh setup complete"
+log success "✅ Zsh setup complete"
 

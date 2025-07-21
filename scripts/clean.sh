@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
+# ─────────────────────────────────────────────
+# This script deletes chezmoi's state file so you can re-run run_once scripts.
+# Useful during development or testing of your dotfiles on fresh macOS installs.
+# ─────────────────────────────────────────────
 set -euo pipefail
 
 echo "🧹 Rollback script – attention : cette opération est destructive !"
-
-# This script deletes chezmoi's state file so you can re-run run_once scripts.
-# Useful during development or testing of your dotfiles on fresh macOS installs.
 
 chezmoi state reset
 

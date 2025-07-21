@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# ─────────────────────────────────────────────
+# Homebrew packages's instalation
+# ─────────────────────────────────────────────
+
+LOG_PATH="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}/scripts/log.sh"
+source "$LOG_PATH"
+
+log info "📦 Installing packages from Brewfile..."
+brew bundle --file="$HOME/.local/share/chezmoi/Brewfile"

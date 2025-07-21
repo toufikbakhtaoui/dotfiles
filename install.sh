@@ -84,4 +84,4 @@ echo "📦 Installing chezmoi..."
 brew install chezmoi
 
 echo "🚀 Initializing chezmoi with your dotfiles..."
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --verbose --apply toufikbakhtaoui
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply toufikbakhtaoui

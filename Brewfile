@@ -1,7 +1,6 @@
 # Applications Homebrew
 brew "git"
 brew "tmux"
-brew "stow"
 brew "openjdk@21"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"

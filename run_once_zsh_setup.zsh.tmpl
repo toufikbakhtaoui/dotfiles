@@ -1,21 +1,29 @@
 #!/usr/bin/env zsh
 
+# ─────────────────────────────────────────────
+# This script configure zsh ans its plugins
+#   - Install Oh My Zsh
+#   - Install zsh plugins
+#   - Create zsh aliases
+#   - Configure JAVA_HOME
+# ─────────────────────────────────────────────
+
 
 # ─────────────────────────────────────────────
-# Zsh setup
+#  Adding the log method
 # ─────────────────────────────────────────────
 
-# Adding the log method
 LOG_PATH="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}/scripts/log.sh"
 source "$LOG_PATH"
 
-ZSHRC="$HOME/.zshrc"
-ALIAS_FILE="$HOME/.zsh_aliases"
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
 # ─────────────────────────────────────────────
 #  Ensure Oh My Zsh is installed
 # ─────────────────────────────────────────────
+
+ZSHRC="$HOME/.zshrc"
+ALIAS_FILE="$HOME/.zsh_aliases"
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   log info "➡️ Installing Oh My Zsh..."

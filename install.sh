@@ -1,11 +1,9 @@
 #!/bin/bash
 
 # ─────────────────────────────────────────────
-# Homebrew packages's instalation
+#  Start macos configuration setup
 # ─────────────────────────────────────────────
 
-LOG_PATH="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}/scripts/log.sh"
-source "$LOG_PATH"
+set -eo pipefail
 
-log info "📦 Installing packages from Brewfile..."
-brew bundle --file="$HOME/.local/share/chezmoi/Brewfile"
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --verbose --apply toufikbakhtaoui

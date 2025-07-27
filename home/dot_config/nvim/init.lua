@@ -17,5 +17,6 @@ require('lazy').setup({
      require 'plugins.neotree',
      require 'plugins.colorscheme',
      require 'plugins.comment',
-     require 'plugins.gitsigns'
+     require 'plugins.gitsigns',
+     require 'plugins.lualine'
 })

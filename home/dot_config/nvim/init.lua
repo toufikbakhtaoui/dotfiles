@@ -16,5 +16,6 @@ rtp:prepend(lazypath)
 require('lazy').setup({
      require 'plugins.neotree',
      require 'plugins.colorscheme',
-     require 'plugins.comment'
+     require 'plugins.comment',
+     require 'plugins.gitsigns'
 })

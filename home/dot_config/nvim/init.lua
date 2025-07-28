@@ -18,5 +18,7 @@ require('lazy').setup({
      require 'plugins.colorscheme',
      require 'plugins.comment',
      require 'plugins.gitsigns',
-     require 'plugins.lualine'
+     require 'plugins.lualine',
+     require 'plugins.bufferline',
+     require 'plugins.telescope'
 })

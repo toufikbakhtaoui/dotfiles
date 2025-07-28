@@ -20,5 +20,6 @@ require('lazy').setup({
      require 'plugins.gitsigns',
      require 'plugins.lualine',
      require 'plugins.bufferline',
-     require 'plugins.telescope'
+     require 'plugins.telescope',
+     require 'plugins.treesitter'
 })

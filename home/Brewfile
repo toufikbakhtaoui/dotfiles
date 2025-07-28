@@ -8,6 +8,7 @@ brew "maven"
 brew "neovim"
 brew "eza"
 brew "node"
+brew "ripgrep"
 
 # Applications Cask
 cask "visual-studio-code"

@@ -15,7 +15,7 @@ return {
                 "jdtls",    -- Java
                 "html",     -- HTML
                 "cssls",    -- CSS
-                "volar",    -- Vue.js
+                "vue_ls",    -- Vue.js
                 "yamlls",   -- YAML
                 "jsonls",   -- JSON
                 "dockerls", -- Docker

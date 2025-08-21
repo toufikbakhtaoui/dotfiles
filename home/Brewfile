@@ -23,4 +23,5 @@ cask "synologyassistant"
 cask "brave-browser"
 cask "netdownloadhelpercoapp"
 cask "ghostty"
+cask "vlc"
 

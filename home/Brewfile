@@ -9,6 +9,8 @@ brew "neovim"
 brew "eza"
 brew "node"
 brew "ripgrep"
+brew "sketchybar"
+brew "borders"
 
 # Applications Cask
 cask "font-caskaydia-cove-nerd-font"
